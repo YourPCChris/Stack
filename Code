@@ -1,0 +1,112 @@
+/*
+Christopher Bennett
+Making a program that emulates the function of the stack data type a FILO data type
+This stack will have the function
+{
+    POP: Minus one from the nextFree pointer and returns the value at the index that the nextFree pointer was pointing to
+    CheckEmpty: Checks if nextFree == -1
+    CheckFull: Checks if nextFree == MAX+1
+    PEAK: returns the value at the top of the stack (nextFree-1) without effecting nextFree pointer
+    PUSH: takes a value and puts it the index nextFree points to
+    This will be using integers only
+}
+01/03/2024
+*/
+
+
+
+
+#include <stdio.h>
+
+
+
+struct Stack
+{
+    int array[30];
+    int MIN;
+    int MAX;
+    int nextFree;
+};
+
+
+void Push(struct Stack *pStack, int value);
+int Pop(struct Stack *pStack);
+int Peak(struct Stack *pStack);
+int Check_Empty(struct Stack *pStack);
+int Check_Full(struct Stack *pStack);
+void Output_Array(int *arr, int size);
+void Initialize_Array(struct Stack *pStack, int m);
+
+
+void main()
+{
+    printf("We Ball!\n");
+
+    struct Stack myStack;Initialize_Array(&myStack, 10);myStack.MAX = 10;myStack.MIN = 1;myStack.nextFree = 1;
+}
+
+
+
+int Check_Empty(struct Stack *pStack)
+{
+    if (pStack->nextFree == pStack->MIN){
+        return -1;
+    }else{return 0;}
+}
+
+int Check_Full(struct Stack *pStack)
+{
+    if (pStack->nextFree == pStack->MAX){
+        return -1;
+    }else{return 0;}
+}
+
+void Push(struct Stack *pStack, int value)
+{
+    printf("PUSH\n");
+    if (Check_Full(pStack) == 0){
+        pStack->array[pStack->nextFree] = value;
+        pStack->nextFree ++;
+        printf("Next Free:\t%i\n", pStack->nextFree);
+        printf("Stack Array:\n");
+        Output_Array(pStack->array, pStack->MAX);
+    }
+
+}
+
+int Pop(struct Stack *pStack)
+{
+    printf("POP\n");
+    if (Check_Empty(pStack) == 0){
+        pStack->nextFree --;
+        return (pStack->array[pStack->nextFree]);
+    }else{return -1;}
+}
+
+int Peak(struct Stack *pStack)
+{
+    printf("PEAK\n");
+    if (Check_Empty(pStack) == 0){
+            return (pStack->array[pStack->nextFree - 1]);
+    }
+}
+
+void Output_Array(int *arr, int size)
+{
+    for (int i=0; i<size; i++)
+    {
+        printf("%i\n", arr[i]);
+    }
+}
+
+void Initialize_Array(struct Stack *pStack, int m)
+{
+    printf("Initialize Stack Array\n");
+    pStack->array[0] = m;
+
+    for (int i=1; i<m ; i++)
+    {
+        pStack->array[i] = 00;
+    }
+    Output_Array(pStack->array, m);
+}
